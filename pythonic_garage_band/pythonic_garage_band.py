@@ -26,26 +26,59 @@ class Musician(ABC):
     def __init__(self, name):
         self.name=name
 
+    @abstractmethod
+    def get_instrument(self):
+        return "This is inside Musician Class and I play nothing"
+
+    @abstractmethod
+    def play_solo(self):
+        return "I am playing nothing"
+
     def __str__(self):
-        return f"this is the string inside Musician class with instance {self.name}"
+        return f"this is the string inside Musician superclass with instance {self.name}"
 
     def __repr__(self):
-        return f"this is the rpr string inside class {self.name}"
+        return f"this is the rpr string inside Musician class and instance {self.name}"
 
 class Guitarist(Musician):
-    pass
+    def __init__(self, name):
+        self.name=name
+
+    def get_instrument(self):
+        return "I love to play my Guitar"
+
+    def play_solo(self):
+        return "I am playing my Guitar"
 
 class Bassist(Musician):
-    pass
+    def __init__(self, name):
+        self.name=name
+
+    def get_instrument(self):
+        return "I love to play my Bass"
+
+    def play_solo(self):
+        return "I am playing my Bass"
 
 class Drummer(Musician):
-    pass
+    def __init__(self, name):
+        self.name=name
+
+    def get_instrument(self):
+        return "I love to play my Drums"
+
+    def play_solo(self):
+        return "I am playing my Drums"
 
 
 if __name__ == "__main__":
-    shredder = Band("shredder","401_students")
-    beatles = Band("Beatles")
-    one = Band("One")
-    print(Band.to_list())
-    print(beatles)
-    print(repr(beatles))
+    # shredder = Band("shredder","401_students")
+    # beatles = Band("Beatles")
+    # one = Band("One")
+    # print(Band.to_list())
+    # print(beatles)
+    # print(repr(beatles))
+    leah = Guitarist("Leah")
+    print(leah)
+    print(leah.get_instrument())
+
