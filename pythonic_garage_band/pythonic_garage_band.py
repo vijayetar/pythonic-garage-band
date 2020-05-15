@@ -5,11 +5,13 @@ class Band:
 
     def __init__(self, name, members = "none presently"):
         self.name = str(name)
-        self.members = members
+        self.members = Musician.to_all()
         Band.names.append(self) #creates a list of instances of class
 
     def play_solos(self):  #get each member to play solo
-        pass
+        band_members = Musician.to_all()
+        for person in band_members:
+            print(f"I am playing solo in the Band, my name is {person}")
 
     def __str__(self):
         return f"this is the string inside Band class with instance {self.name}"
@@ -23,8 +25,11 @@ class Band:
 
 
 class Musician(ABC):
+    members = []
+
     def __init__(self, name):
         self.name=name
+        Musician.members.append(self)
 
     @abstractmethod
     def get_instrument(self):
@@ -34,15 +39,19 @@ class Musician(ABC):
     def play_solo(self):
         return "I am playing nothing"
 
+    @classmethod
+    def to_all(cls):
+        return cls.members
+
     def __str__(self):
         return f"this is the string inside Musician superclass with instance {self.name}"
 
     def __repr__(self):
-        return f"this is the rpr string inside Musician class and instance {self.name}"
+        return self.name
 
 class Guitarist(Musician):
-    def __init__(self, name):
-        self.name=name
+    def __init__(self, name = "unknown"):
+        super().__init__(name)
 
     def get_instrument(self):
         return "I love to play my Guitar"
@@ -51,8 +60,8 @@ class Guitarist(Musician):
         return "I am playing my Guitar"
 
 class Bassist(Musician):
-    def __init__(self, name):
-        self.name=name
+    def __init__(self, name = "unknown"):
+        super().__init__(name)
 
     def get_instrument(self):
         return "I love to play my Bass"
@@ -61,8 +70,8 @@ class Bassist(Musician):
         return "I am playing my Bass"
 
 class Drummer(Musician):
-    def __init__(self, name):
-        self.name=name
+    def __init__(self, name = "unknown"):
+        super().__init__(name)
 
     def get_instrument(self):
         return "I love to play my Drums"
@@ -73,12 +82,15 @@ class Drummer(Musician):
 
 if __name__ == "__main__":
     # shredder = Band("shredder","401_students")
-    # beatles = Band("Beatles")
     # one = Band("One")
     # print(Band.to_list())
     # print(beatles)
     # print(repr(beatles))
     leah = Guitarist("Leah")
-    print(leah)
-    print(leah.get_instrument())
+    ron = Drummer("Ron")
+    hermy = Guitarist("Hermy")
+    harry = Bassist("Harry")
+    print(Musician.to_all())
+    beatles = Band("Beatles")
+    print(beatles.play_solos())
 

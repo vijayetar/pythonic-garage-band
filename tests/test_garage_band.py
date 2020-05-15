@@ -1,17 +1,10 @@
 import pytest
-
-from pythonic_garage_band.pythonic_garage_band import Band, Guitarist, Bassist, Drummer
+from pythonic_garage_band.pythonic_garage_band import Band, Guitarist, Bassist, Drummer, Musician
 
 # check Band name
 def test_band_name():
     actual = Band("Beatles").name
     expected = "Beatles"
-    assert expected == actual
-
-# check default Band members
-def test_band_default_members():
-    actual = Band("Beatles").members
-    expected = "none presently"
     assert expected == actual
 
 # check if Band name is string
@@ -46,7 +39,13 @@ def test_band_repr():
 # check for Guitarist name
 def test_guitarist_name():
     actual = Guitarist("Hermione").name
-    expected = "Hermione"
+    expected = "      "
+    assert expected == actual
+
+# check for Guitarist name by default
+def test_guitarist_name():
+    actual = Guitarist().name
+    expected = "unknown"
     assert expected == actual
 
 # check for Bassist name
@@ -84,11 +83,31 @@ def test_guitarist_str():
 def test_guitarist_repr():
     gildroy = Guitarist("Gildroy")
     actual = gildroy.__repr__()
-    expected = "this is the rpr string inside Musician class and instance Gildroy"
+    expected = "Gildroy"
     assert expected == actual
 
+# check for all the instances of musicians
+def test_musician_to_all(create_band_members):
+    actual = len(Musician.to_all())
+    expected = 4
+    assert expected == actual
+
+# check Band members through Musician class attribute
+def test_band_members(create_band_members):
+    actual = len(Band("Beatles").members)
+    expected = 4
+    assert expected == actual
 #----------------------------------------------------------------------------------
 @pytest.fixture(autouse=True)
 def prep():
     """Reset the Band names list so it's fresh each test run"""
     Band.names = []
+    Musician.members = []
+
+@pytest.fixture
+def create_band_members():
+    Musician.members = []
+    leah = Guitarist("Leah")
+    ron = Drummer("Ron")
+    hermy = Guitarist("Hermy")
+    harry = Bassist("Harry")
